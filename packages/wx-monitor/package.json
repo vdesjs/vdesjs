@@ -1,0 +1,41 @@
+{
+  "name": "@vdesjs/wx-monitor",
+  "version": "1.0.0",
+  "description": "> TODO: description",
+  "author": "china-bin <958615915@qq.com>",
+  "homepage": "",
+  "license": "MIT",
+  "main": "dist/compile/index.js",
+  "module": "dist/compile/index.es.js",
+  "types": "dist/compile/types/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "scripts": {
+    "dev": "vite --force",
+    "build": "npm run build:compile && vite build",
+    "build:compile": "rollup --config rollup.config.js",
+    "preview": "vite preview --port 5005",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.2.5",
+    "@types/jest": "^27.0.2",
+    "autoprefixer": "^10.3.4",
+    "html-element": "^2.3.1",
+    "jest": "^27.2.1",
+    "@vdesjs/kbone-ui": "^1.0.9",
+    "lit": "^2.0.0-rc.4",
+    "postcss-browser8": "^8.3.6",
+    "rollup-plugin-node-polyfills": "^0.2.1",
+    "sass": "^1.41.1",
+    "ts-jest": "^27.0.5",
+    "vite": "^2.5.7"
+  },
+  "dependencies": {
+    "postcss": "^8.3.6"
+  }
+}

@@ -1,0 +1,51 @@
+:root {
+  --background-m1: #17171f;
+  --background-m2: #23232e;
+  --background-m3: #30303d;
+  --background-m4: #3b3b4d;
+  --background-m5: #2d2d3b;
+  --background-m6: #454557;
+  --background-m7: #3b3b47;
+  --background-m8: #272733;
+  --background-m9: #484854;
+  --background-m10: #444457;
+  --background-m11: #7b7b8f;
+  --primary-b1: #1890ff;
+  --primary-b2: #3fa9ff;
+  --primary-b3: rgb(75, 99, 126);
+  --split-b1: #1d1d26;
+  --split-b2: rgba(255, 255, 255, 0.15);
+  --split-b3: rgba(255, 255, 255, 0.09);
+  --icon-m1: rgba(255, 255, 255, 0.45);
+  --highlight-color1: #fff;
+  --disabled-color: rgba(255, 255, 255, 0.25);
+  --text-color: rgba(255, 255, 255, 0.65);
+  --text-color-secondary: rgba(255, 255, 255, 0.45);
+  --head-color: rgba(255, 255, 255, 0.8);
+  --mask-b1: rgba(0, 0, 0, 0.9);
+  --base-font-size: 13px;
+  --success-color: #52c41a;
+  --info-color: #1890ff;
+  --warn-color: #faad14;
+  --error-color: #f5222d;
+
+  --top-bar-height: 29px;
+  --tool-bar-height: 24px;
+  --status-bar-height: 24px;
+  --status-bar-notch-height: 44px;
+  --title-bar-height: 48px;
+  --title-theme-light-text: #111111;
+  --title-theme-light-icon: #108ee9;
+  --title-theme-light-line: rgba(0, 0, 0, 0.05);
+  --title-theme-light-background: #ffffff;
+  --title-theme-dark-text: #ffffff;
+  --title-theme-dark-icon: #ffffff;
+  --title-theme-dark-line: rgba(48, 30, 30, 0.1);
+  --title-theme-dark-background: #262833;
+}
+
+* {
+  border: 0px;
+  margin: 0px;
+  box-sizing: border-box;
+}

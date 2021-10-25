@@ -1,0 +1,44 @@
+{
+  "title": "sitemap.json schema",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "rules": {
+      "type": "array",
+      "description": "索引规则列表",
+      "items": {
+        "type": "object",
+        "properties": {
+          "action": {
+            "type": "string",
+            "enum": [
+              "allow",
+              "disallow"
+            ]
+          },
+          "page": {
+            "type": "string",
+            "description": "\"*\"、页面的路径"
+          },
+          "params": {
+            "type": "array",
+            "description": "当 page 字段指定的页面在被本规则匹配时可能使用的页面参数名称的列表（不含参数值）"
+          },
+          "matching": {
+            "type": "string",
+            "description": "当 page 字段指定的页面在被本规则匹配时，此参数说明 params 匹配方式",
+            "enum": [
+              "exact",
+              "inclusive",
+              "exclusive",
+              "partial"
+            ]
+          },
+          "priority": {
+            "type": "number",
+            "description": "优先级，值越大则规则越早被匹配，否则默认从上到下匹配"
+          }
+        }
+      }
+    }
+  }
+}

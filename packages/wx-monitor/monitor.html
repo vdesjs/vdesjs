@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>monitor</title>
+    <script src="./src/monitor/index.ts" type="module"></script>
+    <!-- <script src="./src/monitor/compoents/index.ts" type="module"></script> -->
+    <style>
+      #monitor {
+        position: relative;
+        height: 667px;
+        width: 375px;
+        background-color: #ffffff;
+      }
+
+      #project {
+        height: 100%;
+        min-width: 320px;
+        background-color: #4e4d4d79;
+        display: flex;
+        justify-content: center;
+      }
+    </style>
+
+    <!-- <script src="./src/monitor/message.ts" type="module"></script> -->
+  </head>
+  <body>
+    <div id="project">
+      <div id="monitor">
+        <monitor-top-bar></monitor-top-bar>
+        <monitor-nav></monitor-nav>
+        <div id="content"> </div>
+      </div>
+    </div>
+  </body>
+  <script></script>
+</html>

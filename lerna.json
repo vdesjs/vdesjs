@@ -1,0 +1,10 @@
+{
+  "npmClient": "yarn",
+  "useWorkspaces": false,
+  "packages": [
+    "packages/*",
+    "packages/vscode-web/extensions/*",
+    "packages/wxmini-vscode-plugin/src/wxml/server"
+  ],
+  "version": "1.0.0"
+}

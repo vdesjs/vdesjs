@@ -1,0 +1,7 @@
+{
+  "pages": [
+    "pages/index/index"
+  ],
+  "sitemapLocation": "sitemap.json",
+  "debug": false
+}

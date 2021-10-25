@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <!-- <script src="./src/index.ts" type="module"></script> -->
+
+    <style>
+      .index {
+        display: flex;
+      }
+      #monitor {
+        min-width: 500px;
+        height: 1000px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="index">
+      <iframe src="/monitor.html" id="monitor"></iframe>
+      <div style="display: flex; flex-direction: column">
+        <div class="title">ffff</div>
+        <button onclick="updateRouter()">更新 route</button><br />
+        <button onclick="updateWxml()">更新wxml</button><br />
+        <button onclick="updateWxss()">更新wxss</button><br />
+        <button onclick="updateJs()">更新js</button><br/>
+        <button onclick="refresh()">更新界面</button>
+      </div>
+    </div>
+  </body>
+  <script>
+    const webview = window.frames[0];
+    function updateWxml() {
+      const val = Math.random();
+      const wxmlStr = `
+        <view>
+          <view class="title">{{testText}}</view>
+        <button>${val}</button>
+          </view>
+      `;
+      // const hfunc = parseWxml(wxmlStr, 'render');
+
+      // webview.postMessage({
+      //   command: 'updateWxml',
+      //   data: {
+      //     page: 'index/index',
+      //     hfunc: hfunc + '\n render()'
+      //   }
+      // });
+
+      webview.postMessage({
+        command: 'updateWxml',
+        data: {
+          page: 'index/index',
+          text: wxmlStr
+        }
+      });
+    }
+
+    let toolgeWxss = true;
+    function updateWxss() {
+      // parseWxss('.title  {color: red; width: 12rpx}').then((res) => {
+      //   console.log(res);
+      // });
+
+      if (toolgeWxss) {
+        webview.postMessage({
+          command: 'updateWxss',
+          data: {
+            page: 'index/index',
+            text: '.title {color: blue;  width: 112rpx}'
+          }
+        });
+      } else {
+        webview.postMessage({
+          command: 'updateWxss',
+          data: {
+            page: 'index/index',
+            text: '.title {color: red;  width: 112rpx}'
+          }
+        });
+      }
+
+      toolgeWxss = !toolgeWxss;
+    }
+
+    function updateJs() {
+      const text = `
+        Page({
+          data: {
+            testText: "hello world${Math.random()}"
+          }
+        })
+      `
+
+      webview.postMessage({
+        command: 'updateJs',
+        data: {
+          page: 'index/index',
+          text
+        }
+      })
+    }
+
+    function updateRouter() {
+      webview.postMessage({
+        command: 'updateRouter',
+        data: {
+          key: 'index/index',
+          val: {
+            path: 'index/index',
+            wxml: {
+              text: '<view bindtap="fff">{{text.hi}}</view>'
+            },
+            wxss: {
+              text: '.title {color: blue}'
+            },
+            js: {
+              text: `Page({
+                data: {
+                  text: {
+                    hi: "hello wrold"
+                  }
+                },
+                fff() {
+                  console.log("fff")
+                }
+              })`
+            }
+          }
+        }
+      });
+    }
+
+    function refresh() {
+      webview.postMessage({
+        command: 'refresh'
+      });
+    }
+  </script>
+</html>

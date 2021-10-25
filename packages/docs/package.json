@@ -1,0 +1,26 @@
+{
+  "name": "docs",
+  "version": "1.0.0",
+  "description": "",
+  "private": "true",
+  "author": "china-bin <958615915@qq.com>",
+  "homepage": "https://github.com/vdesjs/vdesjs#readme",
+  "license": "MIT",
+  "main": "lib/docs.js",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1"
+  },
+  "bugs": {
+    "url": "https://github.com/vdesjs/vdesjs/issues"
+  }
+}

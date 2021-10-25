@@ -1,0 +1,226 @@
+{
+  "name": "wxmini-vscode-plugin",
+  "displayName": "%displayName%",
+  "description": "%description%",
+  "version": "1.0.5",
+  "icon": "assets/logo.png",
+  "categories": [
+    "Programming Languages"
+  ],
+  "private": "true",
+  "publisher": "china-bin",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.55.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vdesjs/vdesjs"
+  },
+  "keywords": [
+    "微信",
+    "小程序",
+    "wechat",
+    "wxml"
+  ],
+  "activationEvents": [
+    "onLanguage:wxml",
+    "workspaceContains:app.json"
+  ],
+  "main": "dist/extension.js",
+  "contributes": {
+    "jsonValidation": [
+      {
+        "fileMatch": "/app.json",
+        "url": "./syntaxes/appjson.schema.json"
+      },
+      {
+        "fileMatch": "/sitemap.json",
+        "url": "./syntaxes/sitema.schema.json"
+      },
+      {
+        "fileMatch": [
+          "/**/*.json",
+          "!/app.json",
+          "!/sitemap.json"
+        ],
+        "url": "./syntaxes/page.schema.json"
+      }
+    ],
+    "languages": [
+      {
+        "id": "wxml",
+        "extensions": [
+          ".wxml"
+        ],
+        "aliases": [
+          "WXML",
+          "wxml"
+        ],
+        "mimetypes": [
+          "text/wxml"
+        ],
+        "configuration": "./syntaxes/wxml.language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "scopeName": "text.wxml.basic",
+        "path": "./syntaxes/wxml.tmLanguage.json",
+        "embeddedLanguages": {
+          "text.wxml": "wxml",
+          "source.css": "css",
+          "source.js": "javascript"
+        }
+      },
+      {
+        "language": "wxml",
+        "scopeName": "text.wxml.derivative",
+        "path": "./syntaxes/wxml-derivative.tmLanguage.json",
+        "embeddedLanguages": {
+          "text.wxml": "wxml",
+          "source.css": "css",
+          "source.js": "javascript"
+        }
+      }
+    ],
+    "configuration": {
+      "id": "wxml",
+      "order": 19,
+      "type": "object",
+      "title": "wxml",
+      "properties": {
+        "wxml.trace.server": {
+          "scope": "window",
+          "type": "string",
+          "enum": [
+            "off",
+            "messages",
+            "verbose"
+          ],
+          "default": "verbose",
+          "description": "Traces the communication between VS Code and the language server."
+        },
+        "wxml.autoClosingTags": {
+          "type": "boolean",
+          "scope": "resource",
+          "default": true,
+          "description": "Enable/disable autoclosing of wxml tags."
+        },
+        "wxml.validate.scripts": {
+          "type": "boolean",
+          "scope": "resource",
+          "default": true,
+          "description": "%wxml.validate.scripts%"
+        },
+        "wxml.format.enable": {
+          "type": "boolean",
+          "scope": "window",
+          "default": true,
+          "description": "%wxml.format.enable.desc%"
+        },
+        "wxml.customData": {
+          "type": "array",
+          "markdownDescription": "%wxml.customData.desc%",
+          "default": [],
+          "items": {
+            "type": "string"
+          },
+          "scope": "resource"
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "wxml.showMonitor",
+        "title": "%wxml.monitor.title%",
+        "category": "Markdown",
+        "icon": "assets/monitor.svg"
+      },
+      {
+        "command": "wxml.compile.preview",
+        "title": "%wxml.compile.preview.title%",
+        "category": "Markdown",
+        "icon": "assets/preview.svg"
+      },
+      {
+        "command": "wxml.compile.upload",
+        "title": "%wxml.compile.upload.title%",
+        "category": "Markdown"
+      },
+      {
+        "command": "wxml.storage.clear",
+        "title": "%wxml.storage.clear.title%",
+        "category": "Markdown"
+      },
+      {
+        "command": "wxml.create.page",
+        "title": "%wxml.create.page.title%"
+      },
+      {
+        "command": "wxml.create.component",
+        "title": "%wxml.create.component.title%"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "wxml.create.page",
+          "group": "file"
+        },
+        {
+          "when": "explorerResourceIsFolder",
+          "command": "wxml.create.component",
+          "group": "file"
+        }
+      ],
+      "editor/title": [
+        {
+          "command": "wxml.showMonitor",
+          "when": "editorLangId == wxml",
+          "alt": "wxml.showMonitorToSide",
+          "group": "navigation"
+        },
+        {
+          "command": "wxml.compile.preview",
+          "when": "editorLangId == wxml",
+          "group": "navigation"
+        }
+      ]
+    },
+    "views": {
+      "explorer": [
+        {
+          "id": "wxmini-view",
+          "name": "微信小程序"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run package",
+    "compile": "webpack",
+    "compile:server": "cd src/wxml/server && npm run compile",
+    "watch": "webpack --watch",
+    "package": "webpack --mode production --devtool hidden-source-map",
+    "update:monitor": "node scripts/update-monitor.js"
+  },
+  "devDependencies": {
+    "@types/node": "^12.11.7",
+    "@types/vscode": "^1.55.0",
+    "glob": "^7.1.6",
+    "raw-loader": "^4.0.2",
+    "ts-loader": "^8.0.14",
+    "vscode-extension-telemetry": "0.4.1",
+    "vscode-languageclient": "^7.0.0",
+    "vscode-nls": "^5.0.0",
+    "webpack": "^5.19.0",
+    "webpack-cli": "^4.4.0"
+  },
+  "dependencies": {
+    "@types/wechat-miniprogram": "^3.4.0",
+    "miniprogram-ci": "^1.6.1",
+    "typescript": "^4.1.3"
+  }
+}

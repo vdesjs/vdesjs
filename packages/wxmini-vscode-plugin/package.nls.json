@@ -1,0 +1,13 @@
+{
+  "displayName": "微信小程序插件",
+  "description": "微信小程序开发预览工具",
+  "wxml.monitor.title": "打开模拟器",
+  "wxml.compile.preview.title": "预览",
+  "wxml.compile.upload.title": "上传",
+  "wxml.storage.clear.title": "清除密钥",
+  "wxml.create.page.title": "新建 Page",
+  "wxml.create.component.title": "新建 Component",
+  "wxml.validate.scripts": "Controls whether the WXML language support validates embedded wxs",
+  "wxml.format.enable.desc": "Enable/disable default WXML formatter.",
+  "wxml.customData.desc": "A list of relative file paths pointing to JSON files following the [custom data format](https://github.com/microsoft/vscode-html-languageservice/blob/master/docs/customData.md).\n\nVS Code loads custom data on startup to enhance its HTML support for the custom HTML tags, attributes and attribute values you specify in the JSON files.\n\nThe file paths are relative to workspace and only workspace folder settings are considered."
+}

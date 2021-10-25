@@ -1,0 +1,15 @@
+.vscode/
+lib/**/*.js.map
+lib/*/*/*.d.ts
+!lib/*/*/htmlScanner.d.ts
+lib/*/test/
+src/
+build/
+.eslintrc
+.gitignore
+.github
+yarn.lock
+tslint.json
+.travis.yml
+gulpfile.js
+.mocharc.json

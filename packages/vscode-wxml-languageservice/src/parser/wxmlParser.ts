@@ -1,0 +1,160 @@
+
+import { createScanner } from './wxmlScanner';
+import { findFirst } from '../utils/arrays';
+import { TokenType } from '../wxmlLanguageTypes';
+import { isVoidElement } from '../languageFacts/fact';
+
+export class Node {
+  public tag: string | undefined;
+  public closed: boolean = false;
+  public startTagEnd: number | undefined;
+  public endTagStart: number | undefined;
+  public attributes: { [name: string]: string | null } | undefined;
+  public get attributeNames(): string[] { return this.attributes ? Object.keys(this.attributes) : []; }
+  constructor(public start: number, public end: number, public children: Node[], public parent?: Node) {
+  }
+  public isSameTag(tagInLowerCase: string | undefined) {
+    if (this.tag === undefined) {
+      return tagInLowerCase === undefined;
+    } else {
+      return tagInLowerCase !== undefined && this.tag.length === tagInLowerCase.length && this.tag.toLowerCase() === tagInLowerCase;
+    }
+  }
+  public get firstChild(): Node | undefined { return this.children[0]; }
+  public get lastChild(): Node | undefined { return this.children.length ? this.children[this.children.length - 1] : void 0; }
+
+  public findNodeBefore(offset: number): Node {
+    const idx = findFirst(this.children, c => offset <= c.start) - 1;
+    if (idx >= 0) {
+      const child = this.children[idx];
+      if (offset > child.start) {
+        if (offset < child.end) {
+          return child.findNodeBefore(offset);
+        }
+        const lastChild = child.lastChild;
+        if (lastChild && lastChild.end === child.end) {
+          return child.findNodeBefore(offset);
+        }
+        return child;
+      }
+    }
+    return this;
+  }
+
+  public findNodeAt(offset: number): Node {
+    const idx = findFirst(this.children, c => offset <= c.start) - 1;
+    if (idx >= 0) {
+      const child = this.children[idx];
+      if (offset > child.start && offset <= child.end) {
+        return child.findNodeAt(offset);
+      }
+    }
+    return this;
+  }
+}
+
+export interface WXMLDocument {
+  roots: Node[];
+  findNodeBefore(offset: number): Node;
+  findNodeAt(offset: number): Node;
+}
+
+export function parse(text: string): WXMLDocument {
+  const scanner = createScanner(text, undefined, undefined, true);
+
+  const wxmlDocument = new Node(0, text.length, [], void 0);
+  let curr = wxmlDocument;
+  let endTagStart: number = -1;
+  let endTagName: string | undefined = undefined;
+  let pendingAttribute: string | null = null;
+  let token = scanner.scan();
+  while (token !== TokenType.EOS) {
+    switch (token) {
+      case TokenType.StartTagOpen:
+        const child = new Node(scanner.getTokenOffset(), text.length, [], curr);
+        curr.children.push(child);
+        curr = child;
+        break;
+      case TokenType.StartTag:
+        curr.tag = scanner.getTokenText();
+        break;
+      case TokenType.StartTagClose:
+        if (curr.parent) {
+          curr.end = scanner.getTokenEnd(); // might be later set to end tag position
+          if (scanner.getTokenLength()) {
+            curr.startTagEnd = scanner.getTokenEnd();
+            if (curr.tag && isVoidElement(curr.tag)) {
+              curr.closed = true;
+              curr = curr.parent;
+            }
+          } else {
+            // pseudo close token from an incomplete start tag
+            curr = curr.parent;
+          }
+        }
+        break;
+      case TokenType.StartTagSelfClose:
+        if (curr.parent) {
+          curr.closed = true;
+          curr.end = scanner.getTokenEnd();
+          curr.startTagEnd = scanner.getTokenEnd();
+          curr = curr.parent;
+        }
+        break;
+      case TokenType.EndTagOpen:
+        endTagStart = scanner.getTokenOffset();
+        endTagName = undefined;
+        break;
+      case TokenType.EndTag:
+        endTagName = scanner.getTokenText().toLowerCase();
+        break;
+      case TokenType.EndTagClose:
+        let node = curr;
+        // see if we can find a matching tag
+        while (!node.isSameTag(endTagName) && node.parent) {
+          node = node.parent;
+        }
+        if (node.parent) {
+          while (curr !== node) {
+            curr.end = endTagStart;
+            curr.closed = false;
+            curr = curr.parent!;
+          }
+          curr.closed = true;
+          curr.endTagStart = endTagStart;
+          curr.end = scanner.getTokenEnd();
+          curr = curr.parent!;
+        }
+        break;
+      case TokenType.AttributeName: {
+        pendingAttribute = scanner.getTokenText();
+        let attributes = curr.attributes;
+        if (!attributes) {
+          curr.attributes = attributes = {};
+        }
+        attributes[pendingAttribute] = null; // Support valueless attributes such as 'checked'
+        break;
+      }
+      case TokenType.AttributeValue: {
+        const value = scanner.getTokenText();
+        const attributes = curr.attributes;
+        if (attributes && pendingAttribute) {
+          attributes[pendingAttribute] = value;
+          pendingAttribute = null;
+        }
+        break;
+      }
+    }
+    token = scanner.scan();
+  }
+  while (curr.parent) {
+    curr.end = text.length;
+    curr.closed = false;
+    curr = curr.parent;
+  }
+  return {
+    roots: wxmlDocument.children,
+    findNodeBefore: wxmlDocument.findNodeBefore.bind(wxmlDocument),
+    findNodeAt: wxmlDocument.findNodeAt.bind(wxmlDocument)
+  };
+}

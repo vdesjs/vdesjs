@@ -1,0 +1,388 @@
+{
+  "title": "app.json schema",
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "properties": {
+    "entryPagePath": {
+      "type": "string",
+      "description": "小程序默认启动首页"
+    },
+    "pages": {
+      "type": "array",
+      "description": "页面路径列表"
+    },
+    "window": {
+      "type": "object",
+      "description": "全局的默认窗口表现",
+      "properties": {
+        "navigationBarBackgroundColor": {
+          "type": "string",
+          "description": "导航栏背景颜色，如 #000000"
+        },
+        "navigationBarTextStyle": {
+          "type": "string",
+          "description": "导航栏标题颜色，仅支持 black / white"
+        },
+        "navigationBarTitleText": {
+          "type": "string",
+          "description": "导航栏标题文字内容"
+        },
+        "navigationStyle": {
+          "type": "string",
+          "description": "导航栏样式",
+          "enum": [
+            "default",
+            "custom"
+          ]
+        },
+        "backgroundColor": {
+          "type": "string",
+          "description": "窗口的背景色"
+        },
+        "backgroundTextStyle": {
+          "type": "string",
+          "description": "下拉 loading 的样式，仅支持 dark / light",
+          "enum": [
+            "dark",
+            "light"
+          ]
+        },
+        "backgroundColorTop": {
+          "type": "string",
+          "description": "顶部窗口的背景色，仅 iOS 支持"
+        },
+        "backgroundColorBottom": {
+          "type": "string",
+          "description": "底部窗口的背景色，仅 iOS 支持"
+        },
+        "enablePullDownRefresh": {
+          "type": "boolean",
+          "description": "是否开启全局的下拉刷新"
+        },
+        "onReachBottomDistance": {
+          "type": "number",
+          "description": "页面上拉触底事件触发时距页面底部距离，单位为 px。"
+        },
+        "pageOrientation": {
+          "type": "string",
+          "description": "屏幕旋转设置，支持 auto / portrait / landscape",
+          "enum": [
+            "auto",
+            "portrait",
+            "landscape"
+          ]
+        },
+        "visualEffectInBackground": {
+          "type": "string",
+          "description": "切入系统后台时，隐藏页面内容，保护用户隐私。支持 hidden / none",
+          "enum": [
+            "none",
+            "hidden"
+          ]
+        }
+      }
+    },
+    "tabBar": {
+      "type": "object",
+      "description": "底部 tab 栏的表现",
+      "properties": {
+        "color": {
+          "type": "string",
+          "description": "tab 上的文字默认颜色，仅支持十六进制颜色"
+        },
+        "selectedColor": {
+          "type": "string",
+          "description": "tab 的背景色，仅支持十六进制颜色"
+        },
+        "backgroundColor": {
+          "type": "string",
+          "description": "tab 的背景色，仅支持十六进制颜色"
+        },
+        "borderStyle": {
+          "type": "string",
+          "description": "tabbar 上边框的颜色， 仅支持 black / white",
+          "enum": [
+            "black",
+            "white"
+          ]
+        },
+        "list": {
+          "type": "array",
+          "description": "tab 的列表，详见 list 属性说明，最少 2 个、最多 5 个 tab",
+          "items": {
+            "type": "object",
+            "required": [
+              "pagePath",
+              "text"
+            ],
+            "properties": {
+              "pagePath": {
+                "type": "string",
+                "description": "页面路径，必须在 pages 中先定义"
+              },
+              "text": {
+                "type": "string",
+                "description": "tab 上按钮文字"
+              },
+              "iconPath": {
+                "type": "string",
+                "description": "图片路径，icon 大小限制为 40kb，建议尺寸为 81px * 81px，不支持网络图片。当 position 为 top 时，不显示 icon"
+              },
+              "selectedIconPath": {
+                "type": "string",
+                "description": "选中时的图片路径，icon 大小限制为 40kb，建议尺寸为 81px * 81px，不支持网络图片。"
+              }
+            }
+          }
+        },
+        "position": {
+          "type": "string",
+          "description": "tabBar 的位置，仅支持 bottom / top",
+          "enum": [
+            "bottom",
+            "top"
+          ]
+        },
+        "custom": {
+          "type": "boolean",
+          "description": "自定义 tabBar"
+        }
+      }
+    },
+    "networkTimeout": {
+      "type": "object",
+      "description": "网络超时时间",
+      "properties": {
+        "request": {
+          "type": "number",
+          "description": "wx.request 的超时时间，单位：毫秒。",
+          "default": 60000
+        },
+        "connectSocket": {
+          "type": "number",
+          "description": "wx.connectSocket 的超时时间，单位：毫秒。",
+          "default": 60000
+        },
+        "uploadFile": {
+          "type": "number",
+          "description": "wx.uploadFile 的超时时间，单位：毫秒。",
+          "default": 60000
+        },
+        "downloadFile": {
+          "type": "number",
+          "description": "wx.downloadFile 的超时时间，单位：毫秒。",
+          "default": 60000
+        }
+      }
+    },
+    "debug": {
+      "type": "boolean",
+      "description": "是否开启 debug 模式，默认关闭"
+    },
+    "functionalPages": {
+      "type": "boolean",
+      "description": "是否启用插件功能页，默认关闭"
+    },
+    "subpackages": {
+      "type": "array",
+      "description": "分包结构配置",
+      "items": {
+        "type": "object",
+        "properties": {
+          "root": {
+            "type": "string",
+            "description": "分包根目录"
+          },
+          "name": {
+            "type": "string",
+            "description": "分包别名，分包预下载时可以使用"
+          },
+          "pages": {
+            "type": "array",
+            "description": "分包页面路径，相对与分包根目录"
+          },
+          "independent": {
+            "type": "boolean",
+            "description": "分包是否是独立分包"
+          }
+        }
+      }
+    },
+    "workers": {
+      "type": "string",
+      "description": "Worker 代码放置的目录"
+    },
+    "requiredBackgroundModes": {
+      "type": "array",
+      "description": "需要在后台使用的能力，如「音乐播放」",
+      "enum": [
+        "audio",
+        "location"
+      ]
+    },
+    "plugins": {
+      "type": "object",
+      "description": "使用到的插件"
+    },
+    "preloadRule": {
+      "type": "object",
+      "description": "分包预下载规则",
+      "patternProperties": {
+        ".*": {
+          "type": "object",
+          "properties": {
+            "packages": {
+              "type": "array",
+              "description": "进入页面后预下载分包的 root 或 name。__APP__ 表示主包。"
+            },
+            "network": {
+              "type": "string",
+              "description": "在指定网络下预下载",
+              "enum": [
+                "all",
+                "wifi"
+              ]
+            }
+          }
+        }
+      }
+    },
+    "resizable": {
+      "type": "boolean",
+      "description": "PC 小程序是否支持用户任意改变窗口大小（包括最大化窗口）；iPad 小程序是否支持屏幕旋转。默认关闭"
+    },
+    "usingComponents": {
+      "type": "object",
+      "description": "全局自定义组件配置"
+    },
+    "permission": {
+      "type": "object",
+      "description": "小程序接口权限相关设置",
+      "properties": {
+        "scope.userInfo": {
+          "$ref": "#/definitions/PermissionObj",
+          "description": "用户信息"
+        },
+        "scope.userLocation": {
+          "$ref": "#/definitions/PermissionObj",
+          "description": "地理位置"
+        },
+        "scope.userLocationBackground": {
+          "$ref": "#/definitions/PermissionObj",
+          "description": "后台定位"
+        },
+        "scope.address": {
+          "$ref": "#/definitions/PermissionObj",
+          "description": "通讯地址（已取消授权，可以直接调用对应接口）"
+        },
+        "scope.invoiceTitle": {
+          "$ref": "#/definitions/PermissionObj",
+          "description": "发票抬头（已取消授权，可以直接调用对应接口）"
+        },
+        "scope.invoice": {
+          "$ref": "#/definitions/PermissionObj",
+          "description": "获取发票（已取消授权，可以直接调用对应接口）"
+        },
+        "scope.werun": {
+          "$ref": "#/definitions/PermissionObj",
+          "description": "微信运动步数"
+        },
+        "scope.record": {
+          "$ref": "#/definitions/PermissionObj",
+          "description": "录音功能"
+        },
+        "scope.writePhotosAlbum": {
+          "$ref": "#/definitions/PermissionObj",
+          "description": "保存到相册"
+        },
+        "scope.camera": {
+          "$ref": "#/definitions/PermissionObj",
+          "description": "摄像头"
+        }
+      }
+    },
+    "sitemapLocation": {
+      "type": "string",
+      "description": "指明 sitemap.json 的位置"
+    },
+    "style": {
+      "type": "string",
+      "description": "指定使用升级后的weui样式",
+      "enum": [
+        "v2"
+      ]
+    },
+    "useExtendedLib": {
+      "type": "object",
+      "description": "指定需要引用的扩展库",
+      "properties": {
+        "kbone": {
+          "type": "boolean"
+        },
+        "weui": {
+          "type": "boolean"
+        }
+      }
+    },
+    "entranceDeclare": {
+      "type": "object",
+      "description": "微信消息用小程序打开",
+      "properties": {
+        "locationMessage": {
+          "type": "object",
+          "description": "声明“位置消息”场景进入小程序的启动页面",
+          "properties": {
+            "path": {
+              "type": "string",
+              "description": "启动页路径，必须是在pages中已经定义"
+            },
+            "query": {
+              "type": "string",
+              "description": "启动页参数"
+            }
+          }
+        }
+      }
+    },
+    "darkmode": {
+      "type": "boolean",
+      "description": "小程序支持 DarkMode"
+    },
+    "themeLocation": {
+      "type": "string",
+      "description": "指明 theme.json 的位置，darkmode为true为必填"
+    },
+    "lazyCodeLoading": {
+      "type": "string",
+      "description": "配置自定义组件代码按需注入"
+    },
+    "singlePage": {
+      "type": "object",
+      "description": "单页模式相关配置",
+      "properties": {
+        "navigationBarFit": {
+          "type": "string",
+          "description": "导航栏与页面的相交状态，值为 float 时表示导航栏浮在页面上，与页面相交；值为 squeezed 时表示页面被导航栏挤压，与页面不相交"
+        }
+      }
+    },
+    "restartStrategy": {
+      "type": "string",
+      "description": "重新启动策略配置",
+      "enum": [
+        "homePage",
+        "homePageAndLatestPage"
+      ]
+    }
+  },
+  "definitions": {
+    "PermissionObj": {
+      "type": "object",
+      "properties": {
+        "desc": {
+          "type": "string",
+          "description": "小程序获取权限时展示的接口用途说明。"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "name": "@vdesjs/vscode-wxml-languageservice",
+  "version": "4.0.11",
+  "description": "Language service for HTML",
+  "main": "./lib/umd/wxmlLanguageService.js",
+  "typings": "./lib/umd/wxmlLanguageService",
+  "module": "./lib/esm/wxmlLanguageService.js",
+  "author": "china-bin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vdesjs/vscode-wxml-languageservice"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/vdesjs/vscode-wxml-languageservice"
+  },
+  "devDependencies": {
+    "@types/mocha": "^8.2.2",
+    "@types/node": "^10.12.21",
+    "fs-extra": "^10.0.0",
+    "js-beautify": "^1.14.0",
+    "mocha": "^9.1.1",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.1.3",
+    "@vdesjs/wxml-beautify": "^1.0.0"
+  },
+  "dependencies": {
+    "vscode-languageserver-textdocument": "^1.0.1",
+    "vscode-languageserver-types": "^3.16.0",
+    "vscode-nls": "^5.0.0",
+    "vscode-uri": "^3.0.2"
+  },
+  "scripts": {
+    "prepublishOnly": "npm run clean && npm run compile-esm && npm run test && npm run remove-sourcemap-refs",
+    "compile": "tsc -p ./src ",
+    "compile-esm": "tsc -p ./src/tsconfig.esm.json",
+    "watch": "tsc -w -p ./src ",
+    "clean": "rimraf lib",
+    "remove-sourcemap-refs": "node ./build/remove-sourcemap-refs.js",
+    "test": "npm run compile && mocha ./lib/umd/test/*.js",
+    "install-types-next": "yarn add vscode-languageserver-types@next -f -S && yarn add vscode-languageserver-textdocument@next -f -S",
+    "preversion": "npm test",
+    "postversion": "git push && git push --tags"
+  }
+}

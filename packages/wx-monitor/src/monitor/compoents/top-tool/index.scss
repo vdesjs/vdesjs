@@ -1,0 +1,42 @@
+.top-tool {
+  height: var(--top-bar-height);
+  border-bottom: 1px solid var(--split-b1);
+  line-height: var(--top-bar-height);
+  background: var(--background-m2);
+  opacity: var(--status-opacity);
+  color: var(--text-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .ordered-left {
+    height: 100%;
+    display: flex;
+
+    .deviceList {
+      cursor: pointer;
+      font-size: 12px;
+      height: 28px;
+      width: 130px;
+      overflow: hidden;
+
+      .select {
+        display: flex;
+        height: 28px;
+        .render {
+        }
+
+        .arrow {
+          right: 12px;
+          top: 16px;
+          .arrow-down {
+          }
+        }
+      }
+    }
+  }
+}
+
+.select {
+  display: flex;
+}

@@ -1,0 +1,32 @@
+{
+	"name": "wxml (Derivative)",
+	"scopeName": "text.wxml.derivative",
+	"patterns": [
+		{
+			"include": "text.wxml.basic#core-minus-invalid"
+		},
+		{
+			"begin": "(</?)(\\w[^\\s>]*)(?<!/)",
+			"beginCaptures": {
+				"1": {
+					"name": "punctuation.definition.tag.begin.wxml"
+				},
+				"2": {
+					"name": "entity.name.tag.wxml"
+				}
+			},
+			"end": "((?: ?/)?>)",
+			"endCaptures": {
+				"1": {
+					"name": "punctuation.definition.tag.end.wxml"
+				}
+			},
+			"name": "meta.tag.other.unrecognized.wxml.derivative",
+			"patterns": [
+				{
+					"include": "text.wxml.basic#attribute"
+				}
+			]
+		}
+	]
+}

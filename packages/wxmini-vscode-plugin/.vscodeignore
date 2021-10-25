@@ -1,0 +1,16 @@
+.vscode/**
+.vscode-test/**
+src/monitor
+src/wxml/client
+src/wxml/server/node_modules
+src/wxml/server/src
+.gitignore
+.yarnrc
+**/tsconfig.json
+**/.eslintrc.json
+**/*.map
+example/**
+scripts/**
+*.vsix
+*.log
+*.lock

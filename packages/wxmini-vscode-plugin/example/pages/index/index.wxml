@@ -1,0 +1,5 @@
+<view>
+	<view id="ccc" class="title" bindtap="aaaa" style="width: 100px;height: 20%;">
+		{{text}}
+  </view>
+</view>
